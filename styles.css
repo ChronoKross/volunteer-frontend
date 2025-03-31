@@ -1,0 +1,31 @@
+/* This is the minimal CSS needed for the components to work properly */
+/* You'll need to include this in your project or add it to your global CSS */
+
+/* Base styles for dark mode */
+:root {
+  --primary: 255 115 179;
+  --primary-foreground: 255 255 255;
+}
+
+/* Add smooth transitions for theme changes */
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Animation for the glowing orbs */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
