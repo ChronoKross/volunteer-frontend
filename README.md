@@ -20,3 +20,4 @@ This is the frontend for the **Volunteer Queue** app — a clean, animated inter
    ```bash
    git clone https://github.com/ChronoKross/volunteer-frontend.git
    cd volunteer-frontend
+   npm run dev
