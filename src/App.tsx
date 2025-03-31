@@ -3,13 +3,27 @@ import { ButtonStack } from "./components/ButtonStack";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { Employee } from "./types/types";
-const apiURL = import.meta.env.VITE_BACKEND_URL
-console.log(apiURL)
+
+const apiURL = import.meta.env.VITE_BACKEND_URL;
+console.log(apiURL);
 
 function App() {
   const [employeeItems, setEmployeeItems] = useState<Employee[]>([]);
+  const [authenticated, setAuthenticated] = useState(false);
+
   const getALLEndpoint = `${apiURL}/api/queue/`;
   const updateEndpoint = `${apiURL}/api/queue/volunteer`;
+
+  // 🔐 Ask for passkey on mount
+  useEffect(() => {
+    const pass = prompt("🔐 Enter the passkey:");
+    if (pass === "1299") {
+      setAuthenticated(true);
+      fetchEmployees(); // only fetch if correct pass
+    } else {
+      alert("❌ Incorrect passkey. Access denied.");
+    }
+  }, []);
 
   // ⬇ Fetch all employees
   const fetchEmployees = async () => {
@@ -17,44 +31,38 @@ function App() {
       const res = await fetch(getALLEndpoint);
       if (!res.ok) throw new Error("Failed to fetch employees");
       const data = await res.json();
-      
       setEmployeeItems(data);
-      
     } catch (err) {
       console.error("Error fetching employees:", err);
     }
   };
 
-  useEffect(() => {
-    fetchEmployees();
-  }, []);
-
-  
-
   // ⬇ Volunteer logic
-const volunteer = async (id: number) => {
-  try {
-    const res = await fetch(`${apiURL}/api/queue/volunteer`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    });
+  const volunteer = async (id: number) => {
+    try {
+      const res = await fetch(updateEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
 
-    if (!res.ok) throw new Error("Volunteer action failed");
-    console.log(`✅ Volunteer success for employee ID: ${id}`);
-    await fetchEmployees();
-  } catch (err) {
-    console.error("Error volunteering:", err);
-  }
-};
-
+      if (!res.ok) throw new Error("Volunteer action failed");
+      console.log(`✅ Volunteer success for employee ID: ${id}`);
+      await fetchEmployees();
+    } catch (err) {
+      console.error("Error volunteering:", err);
+    }
+  };
 
   // ⬇ On button click
   const handleButtonClick = async (employee: Employee) => {
     await volunteer(employee.id);
   };
+
+  // 🛑 Don't render UI until authenticated
+  if (!authenticated) return null;
 
   return (
     <ThemeProvider>
