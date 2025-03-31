@@ -17,6 +17,7 @@ function App() {
       const data = await res.json();
       console.log(data)
       setEmployeeItems(data);
+      
     } catch (err) {
       console.error("Error fetching employees:", err);
     }
@@ -26,8 +27,10 @@ function App() {
     fetchEmployees();
   }, []);
 
+  
+
   // ⬇ Volunteer logic
-const volunteer = async (id: string) => {
+const volunteer = async (id: number) => {
   try {
     const res = await fetch("http://localhost:3333/api/queue/volunteer", {
       method: "POST",
