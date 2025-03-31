@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 :root {
+  --app-height: 100vh; /* 👈 fallback for mobile nav bar fix */
+
   --primary: 255 115 179;
   --primary-foreground: 255 255 255;
 
@@ -62,7 +64,9 @@
   * {
     @apply border-border;
   }
+  html,
   body {
+    height: var(--app-height); /* 👈 actually respects visible height */
     @apply bg-background text-foreground;
     margin: 0;
     padding: 0;
@@ -71,10 +75,9 @@
   }
 }
 
-/* Add smooth transitions for theme changes */
+/* Smooth transition for dark/light mode */
 .transition-colors {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
-
