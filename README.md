@@ -16,7 +16,7 @@ This is the frontend for the **Volunteer Queue** app — a clean, animated inter
 
 ## 📦 Setup
 
-**THIS IS FRONTEND -the backend MUST be running also.
+**THIS IS FRONTEND -the backend MUST be running also (https://github.com/ChronoKross/volunteer-backend).
 
 1. **Clone the repo**
    ```bash
