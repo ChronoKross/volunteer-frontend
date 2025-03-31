@@ -3,11 +3,13 @@ import { ButtonStack } from "./components/ButtonStack";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { Employee } from "./types/types";
+const apiURL = import.meta.env.VITE_BACKEND_URL
+console.log(apiURL)
 
 function App() {
   const [employeeItems, setEmployeeItems] = useState<Employee[]>([]);
-  const getALLEndpoint = "http://localhost:3333/api/queue/";
-  const updateEndpoint = "http://localhost:3333/api/queue/volunteer"
+  const getALLEndpoint = `${apiURL}/api/queue/`;
+  const updateEndpoint = `${apiURL}/api/queue/volunteer`;
 
   // ⬇ Fetch all employees
   const fetchEmployees = async () => {
@@ -15,7 +17,7 @@ function App() {
       const res = await fetch(getALLEndpoint);
       if (!res.ok) throw new Error("Failed to fetch employees");
       const data = await res.json();
-      console.log(data)
+      
       setEmployeeItems(data);
       
     } catch (err) {
@@ -32,7 +34,7 @@ function App() {
   // ⬇ Volunteer logic
 const volunteer = async (id: number) => {
   try {
-    const res = await fetch("http://localhost:3333/api/queue/volunteer", {
+    const res = await fetch(`${apiURL}/api/queue/volunteer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
