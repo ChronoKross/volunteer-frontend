@@ -62,14 +62,14 @@ export function TimelineItem({ entry, index }: TimelineItemProps) {
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-blue-500 dark:text-purple-400" />
             <p className="text-sm text-gray-600 dark:text-white/60">
-              Shift Hours: <span className="font-medium">{hoursVolunteered}</span>
+              Hours Volunteered: <span className="font-medium">{hoursVolunteered}</span>
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <BarChart className="h-4 w-4 text-blue-500 dark:text-purple-400" />
             <p className="text-sm text-gray-600 dark:text-white/60">
-              Total: <span className="font-medium">{totalTimeVolunteered}</span>
+              Total Hours Volunteered: <span className="font-medium">{totalTimeVolunteered}</span>
             </p>
           </div>
         </div>

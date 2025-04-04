@@ -13,6 +13,7 @@ export interface TimelineEntry {
   name: string;
   profilePic: string;
   timestamp: string;
+   date?: string;
   hoursVolunteered: number;           
   totalTimeVolunteered: number;
 }
