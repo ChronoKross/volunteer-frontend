@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchEmployees, volunteerEmployee } from "../api";
 import { Employee } from "@/types/types";
+import { calculateHoursVolunteered } from "@/utils/timeHelpers";
 
 export const useQueue = () => {
   const [employeeItems, setEmployeeItems] = useState<Employee[]>([]);
@@ -36,10 +37,13 @@ export const useQueue = () => {
 
   // Function to handle volunteer action
   const handleVolunteer = async (id: number) => {
-    if (!authenticated) return;  // Prevent action if not authenticated
+    if (!authenticated) return;
+
+    const leaveTime = new Date();
+    const hoursVolunteered = calculateHoursVolunteered(leaveTime);
 
     try {
-      await volunteerEmployee(id);
+      await volunteerEmployee(id, hoursVolunteered); // Pass hoursVolunteered to the backend
       await getEmployees(); // Refresh the queue
     } catch (err) {
       console.error("Error volunteering:", err);

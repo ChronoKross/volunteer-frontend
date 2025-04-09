@@ -9,11 +9,11 @@ export const fetchEmployees = async (): Promise<Employee[]> => {
   return res.json();
 };
 
-export const volunteerEmployee = async (id: number): Promise<void> => {
+export const volunteerEmployee = async (id: number, hoursVolunteered: number): Promise<void> => {
   const res = await fetch(`${apiURL}/api/queue/volunteer`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id }),
+    body: JSON.stringify({ id, hoursVolunteered }),
   });
 
   if (!res.ok) throw new Error("Volunteer action failed");
